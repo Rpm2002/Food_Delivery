@@ -1,5 +1,6 @@
 import React from 'react'
 import { MdOutlineClose } from "react-icons/md";
+import ItemCard from './ItemCard';
 function Cart() {
   return (
     <>
@@ -9,6 +10,10 @@ function Cart() {
             <MdOutlineClose className='border-2 border-gray-600 font-bold rounded-lg
             p-1 text-xl hover:text-red-300 cursor-pointer hover:border-red-300' />
           </div>
+
+          <ItemCard/>
+          <ItemCard/>
+          <ItemCard/>
 
           <div className='absolute bottom-0'>
             <h3 className='font-semibold text-gray-800 ml-1'>Items : </h3>
