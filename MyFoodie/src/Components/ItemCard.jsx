@@ -13,7 +13,7 @@ function ItemCard() {
         className='w-[50px] h-[50px]'
       />
 
-      <div>
+      <div className='leading-5'>
         <h2 className='font-bold text-gray-800'>Onion Pizza</h2>
         <div className='flex justify-between'>
         <span className='text-violet-600 font-bold'>₹120</span>
