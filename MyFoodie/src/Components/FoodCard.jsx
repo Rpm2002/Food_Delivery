@@ -25,7 +25,7 @@ function FoodCard({id,img,name,price,desc,category,rating}) {
           </span>
           <button className='p-2 text-white bg-violet-600 hover:bg-violet-400 rounded-lg text-sm'
           onClick={()=>{
-            dispatch(addToCart({id,name,price,rating,qty:1}))
+            dispatch(addToCart({id,name,price,img,rating,qty:1}))
           }}>
             Add to Cart
           </button>

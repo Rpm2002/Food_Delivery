@@ -8,6 +8,8 @@ import { FaCartPlus } from "react-icons/fa6";
 function Cart() {
   const [activeCart,setActiveCart]=useState(true)
   const cartItems=useSelector(state=>state.cart)
+  const TotalQty=cartItems.reduce((TotalQty,item)=>TotalQty+item.qty,0)
+  const Totalprice=cartItems.reduce((total,item)=>total+(item.qty*item.price),0)
   console.log(cartItems);
   return (
     <>
@@ -22,13 +24,22 @@ function Cart() {
             p-1 text-xl hover:text-red-500 cursor-pointer hover:border-red-500' />
           </div>
 
-          <ItemCard/>
-          <ItemCard/>
-          <ItemCard/>
+          {cartItems.length>0?cartItems.map((food)=>{
+            return(
+            <ItemCard
+              key={food.id}
+              id={food.id}
+              name={food.name}
+              qty={food.qty}
+              img={food.img}
+              price={food.price}
+            />
+            )
+          }) : <h2 className='text-center text-xl font-bold text-gray-800 pt-6'>Nothing in the Cart</h2>}
 
           <div className='absolute bottom-0'>
-            <h3 className='font-semibold text-gray-800 ml-1'>Items : </h3>
-            <h3 className='font-semibold text-gray-800 ml-1'>Total Amount : </h3>
+            <h3 className='font-semibold text-gray-800 ml-1'>Items : {TotalQty} </h3>
+            <h3 className='font-semibold text-gray-800 ml-1'>Total Amount : {Totalprice}</h3>
             <hr className='w-[90vw] lg:w-[18vw] my-2'/>
             <button className='bg-violet-600 font-bold px-3 text-white 
             py-2 rounded-lg w-[90vw] lg:w-[18vw] mb-3 hover:bg-violet-500'>Checkout</button>
@@ -39,7 +50,8 @@ function Cart() {
         onClick={()=>{
           setActiveCart(!activeCart)
         }}
-        className='fixed text-2xl cursor-pointer hover:text-green-500 right-4 bottom-4'/>
+        className={`fixed text-2xl cursor-pointer hover:text-green-500 right-4 bottom-4 
+         ${TotalQty>0 && "animate-bounce delay-500 transition-all"}`}/>
     </>
     
   )

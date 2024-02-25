@@ -2,31 +2,37 @@ import React from 'react'
 import { GoPlus } from "react-icons/go";
 import { AiOutlineDelete } from "react-icons/ai";
 import { LuMinus } from "react-icons/lu";
+import { useDispatch } from 'react-redux';
+import { removeFromCart } from '../Redux/slices/Cartslice';
+import { IncrementQty,DecrementQty } from '../Redux/slices/Cartslice';
 
-function ItemCard() {
-  return (
-    <div className='flex gap-2 rounded-lg p-2 shadow-md mb-3'>
-      <AiOutlineDelete  className='absolute right-7 hover:text-red-500'/>
-      <img 
-        src='https://img.freepik.com/free-photo/seafood-pizza_74190-5944.jpg?w=996&t=st=1693062328~exp=1693062928~hmac=53fd9ad496580db41c6ca8066510cd89c6b0a0389de8bb6b875a78a1eda09cb5'
-        alt='' 
-        className='w-[50px] h-[50px]'
-      />
-
-      <div className='leading-5'>
-        <h2 className='font-bold text-gray-800'>Onion Pizza</h2>
-        <div className='flex justify-between'>
-        <span className='text-violet-600 font-bold'>₹120</span>
-          <div className='flex justify-center items-center gap-2 absolute right-7'>
-            <GoPlus className='border-2 border-gray-600 text-gray-600 hover:text-white hover:bg-violet-600 hover:border-none rounded-md p-1 text-xl trasnition-all ease-linear cursor-pointer'/>
-            <span>1</span>
-            <LuMinus className='border-2 border-gray-600 text-gray-600 hover:text-white hover:bg-violet-600 hover:border-none rounded-md p-1 text-xl trasnition-all ease-linear cursor-pointer'/>
+const ItemCard=({id,name,qty,price,img})=>{
+  const dispatch=useDispatch()
+  {
+    return (
+      <div className='flex gap-2 rounded-lg p-2 shadow-md mb-3'>
+        <AiOutlineDelete  onClick={()=>dispatch(removeFromCart({id,img,name,price,qty}))} className='absolute right-7 hover:text-red-500'/>
+        <img 
+          src={img}
+          alt='' 
+          className='w-[50px] h-[50px]'
+        />
+  
+        <div className='leading-5'>
+          <h2 className='font-bold text-gray-800'>{name}</h2>
+          <div className='flex justify-between'>
+          <span className='text-violet-600 font-bold'>₹{price}</span>
+            <div className='flex justify-center items-center gap-2 absolute right-7'>
+              <GoPlus onClick={()=>qty>=1?dispatch(IncrementQty({id})):qty=0} className='border-2 border-gray-600 text-gray-600 hover:text-white hover:bg-violet-600 hover:border-none rounded-md p-1 text-xl trasnition-all ease-linear cursor-pointer'/>
+              <span>{qty}</span>
+              <LuMinus onClick={()=>qty>=1?dispatch(DecrementQty({id})):qty=0} className='border-2 border-gray-600 text-gray-600 hover:text-white hover:bg-violet-600 hover:border-none rounded-md p-1 text-xl trasnition-all ease-linear cursor-pointer'/>
+            </div>
+            
           </div>
-          
         </div>
       </div>
-    </div>
-  )
+    )
+} 
 }
 
 export default ItemCard
