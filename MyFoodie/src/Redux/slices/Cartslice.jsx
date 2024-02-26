@@ -32,10 +32,16 @@ const CartSlice=createSlice({
         ...item, qty:item.qty+1}:item)
     },
 
-    DecrementQty:(state,action)=>{
-      state.cart=state.cart.map(item=>item.id===action.payload.id?{
-        ...item, qty:item.qty-1}:item)
+    DecrementQty: (state, action) => {
+    const existingItem = state.cart.find(item => item.id === action.payload.id);
+    if (existingItem && existingItem.qty > 1) {
+      state.cart = state.cart.map(item =>
+        item.id === action.payload.id ? { ...item, qty: item.qty - 1 } : item
+      );
+    } else {
+      state.cart = state.cart.filter(item => item.id !== action.payload.id);
     }
+  }
 
   }
 })

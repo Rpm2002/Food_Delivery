@@ -5,13 +5,22 @@ import { LuMinus } from "react-icons/lu";
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../Redux/slices/Cartslice';
 import { IncrementQty,DecrementQty } from '../Redux/slices/Cartslice';
+import { toast } from "react-hot-toast";
 
 const ItemCard=({id,name,qty,price,img})=>{
   const dispatch=useDispatch()
   {
     return (
       <div className='flex gap-2 rounded-lg p-2 shadow-md mb-3'>
-        <AiOutlineDelete  onClick={()=>dispatch(removeFromCart({id,img,name,price,qty}))} className='absolute right-7 hover:text-red-500'/>
+        <AiOutlineDelete  
+          onClick={()=>{
+            dispatch(removeFromCart({id,img,name,price,qty}))
+            toast(`${name} Removed!`, {
+              icon: '👋',
+            });
+          }
+        } 
+        className='absolute right-7 hover:text-red-500'/>
         <img 
           src={img}
           alt='' 
