@@ -4,13 +4,17 @@ import ItemCard from './ItemCard';
 import {useSelector} from "react-redux"
 import { useState } from "react";
 import { FaCartPlus } from "react-icons/fa6";
+import {useNavigate} from "react-router-dom"
 
 function Cart() {
-  const [activeCart,setActiveCart]=useState(true)
-  const cartItems=useSelector(state=>state.cart)
+  const [activeCart,setActiveCart]=useState(false)
+
+  const cartItems=useSelector(state=>state.cart.cart)
   const TotalQty=cartItems.reduce((TotalQty,item)=>TotalQty+item.qty,0)
   const Totalprice=cartItems.reduce((total,item)=>total+(item.qty*item.price),0)
   console.log(cartItems);
+
+  const navigate = useNavigate();
   return (
     <>
         <div className={`fixed top-0 right-0 w-full lg:w-[20vw] h-full bg-white p-4  ${activeCart? "translate-x-0" : "translate-x-full"} transition-all duration-500 z-50` }>
@@ -41,7 +45,8 @@ function Cart() {
             <h3 className='font-semibold text-gray-800 ml-1'>Items : {TotalQty} </h3>
             <h3 className='font-semibold text-gray-800 ml-1'>Total Amount : {Totalprice}</h3>
             <hr className='w-[90vw] lg:w-[18vw] my-2'/>
-            <button className='bg-violet-600 font-bold px-3 text-white 
+            <button onClick={() => navigate("/success")} 
+            className='bg-violet-600 font-bold px-3 text-white 
             py-2 rounded-lg w-[90vw] lg:w-[18vw] mb-3 hover:bg-violet-500'>Checkout</button>
           </div>
         
